@@ -1,5 +1,5 @@
 resource "aws_instance" "CentOS_instance" {
-ami = "ami-0fc61db8544a617ed"
+ami = "ami-0affd4508a5d2481b"
 instance_type = "t2.micro"
 subnet_id = aws_subnet.main.id
 
