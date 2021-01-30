@@ -8,7 +8,7 @@ associate_public_ip_address = true
 }
 
 resource "aws_security_group" "example" {
-  name = var.instance_name
+  name = aws_instance.CentOS_instance
 
   egress {
     from_port   = 0
@@ -56,7 +56,6 @@ resource "null_resource" "example_provisioner" {
   connection {
     type  = "ssh"
     host  = aws_instance.CentOS_instance.public_ip
-    user  = ubuntu
     port  = 22
     agent = true
   }
