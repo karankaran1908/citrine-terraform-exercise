@@ -5,10 +5,14 @@ subnet_id = aws_subnet.main.id
 
 associate_public_ip_address = true
 
+tags = {
+    Name = "test"
+  }
+
 }
 
 resource "aws_security_group" "example" {
-  name = aws_instance.CentOS_instance
+  name = "test"
 
   egress {
     from_port   = 0
