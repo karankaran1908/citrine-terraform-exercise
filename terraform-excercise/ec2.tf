@@ -172,7 +172,7 @@ resource "aws_instance" "web" {
   instance_type          = "t2.micro"
   key_name               = ""
   vpc_security_group_ids = ["${aws_security_group.application_security_group.id}"]
-  subnet_id              = "${aws_subnet.public_subnet[0].id}"
+  subnet_id              = "${aws_subnet.public_subnet.id}"
   # iam_instance_profile   = "${aws_iam_instance_profile.CodeDeployEC2ServiceRole-instance-profile.name}"
 
   ebs_block_device {
@@ -229,7 +229,7 @@ resource "aws_lb" "application_load_balancer" {
   load_balancer_type = "application"
   ip_address_type    = "ipv4"
   security_groups = ["${aws_security_group.alb_security_group.id}"]
-  subnets = ["${aws_subnet.public_subnet[0].id}"]
+  subnets = ["${aws_subnet.public_subnet.id}"]
 
   tags = {
     Name = "application-load-balancer"
