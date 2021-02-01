@@ -198,6 +198,11 @@ resource "aws_instance" "web" {
     Name = "Webapp_EC2"
    }
 }
+# IAM  CodeDeployEC2ServiceRole Profile Instance
+resource "aws_iam_instance_profile" "CodeDeployEC2ServiceRole-instance-profile" {
+  name = "CodeDeployEC2ServiceRole-instance-profile"
+  role = "${aws_iam_role.CodeDeployEC2ServiceRole.name}"
+}
 # IAM CodeDeployEC2ServiceRole Role
 resource "aws_iam_role" "CodeDeployEC2ServiceRole" {
   name = "CodeDeployEC2ServiceRole"
