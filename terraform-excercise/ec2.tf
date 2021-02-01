@@ -93,8 +93,18 @@ resource "aws_vpc" "vpc" {
 }
 
 # Public Subnet
-resource "aws_subnet" "public_subnet" {
+resource "aws_subnet" "public_subnet1" {
   cidr_block              = "10.0.1.0/24"
+  vpc_id                  = "${aws_vpc.vpc.id}"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "public-subnet"
+  }
+}
+#another subnet
+resource "aws_subnet" "public_subnet2" {
+  cidr_block              = "10.0.2.0/24"
   vpc_id                  = "${aws_vpc.vpc.id}"
   map_public_ip_on_launch = true
 
@@ -128,8 +138,9 @@ resource "aws_route_table" "public_route" {
 # Associate Public Subnet with Public Route Table
 resource "aws_route_table_association" "public_subnet_assoc" {
   route_table_id = "${aws_route_table.public_route.id}"
-  subnet_id      = "${aws_subnet.public_subnet.id}"
+  subnet_id      = "${aws_subnet.public_subnet1.id}"
 }
+
 
 # Application Security Group
 resource "aws_security_group" "application_security_group" {
@@ -172,7 +183,7 @@ resource "aws_instance" "web" {
   instance_type          = "t2.micro"
   key_name               = ""
   vpc_security_group_ids = ["${aws_security_group.application_security_group.id}"]
-  subnet_id              = "${aws_subnet.public_subnet.id}"
+  subnet_id              = "${aws_subnet.public_subnet1.id}"
   iam_instance_profile   = "${aws_iam_instance_profile.CodeDeployEC2ServiceRole-instance-profile.name}"
 
   ebs_block_device {
@@ -257,7 +268,7 @@ resource "aws_lb" "application_load_balancer" {
   load_balancer_type = "application"
   ip_address_type    = "ipv4"
   security_groups = ["${aws_security_group.alb_security_group.id}"]
-  subnets = ["${aws_subnet.public_subnet.id}"]
+  subnets = ["${aws_subnet.public_subnet1.id}","${aws_subnet.public_subnet2.id}"]
 
   tags = {
     Name = "application-load-balancer"
