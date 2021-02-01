@@ -173,7 +173,7 @@ resource "aws_instance" "web" {
   key_name               = ""
   vpc_security_group_ids = ["${aws_security_group.application_security_group.id}"]
   subnet_id              = "${aws_subnet.public_subnet.id}"
-  # iam_instance_profile   = "${aws_iam_instance_profile.CodeDeployEC2ServiceRole-instance-profile.name}"
+  iam_instance_profile   = "${aws_iam_instance_profile.CodeDeployEC2ServiceRole-instance-profile.name}"
 
   ebs_block_device {
     device_name = "/dev/sda1"
@@ -197,6 +197,29 @@ resource "aws_instance" "web" {
   tags = {
     Name = "Webapp_EC2"
    }
+}
+# IAM CodeDeployEC2ServiceRole Role
+resource "aws_iam_role" "CodeDeployEC2ServiceRole" {
+  name = "CodeDeployEC2ServiceRole"
+
+  assume_role_policy = <<EOF
+{
+"Version": "2012-10-17",
+"Statement": [
+{
+"Action": "sts:AssumeRole",
+"Principal": {
+ "Service": "ec2.amazonaws.com"
+},
+"Effect": "Allow"
+}
+]
+}
+EOF
+
+  tags = {
+    tag-key = "CodeDeployEC2ServiceRole"
+  }
 }
 # Taget Group
 resource "aws_lb_target_group" "alb-target-group" {
