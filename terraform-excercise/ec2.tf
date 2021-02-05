@@ -149,9 +149,9 @@ resource "aws_security_group" "application_security_group" {
   vpc_id      = "${aws_vpc.vpc.id}"
 
   ingress {
-    description = "TLS from load balancer"
-    from_port   = 443
-    to_port     = 443
+    description = ""
+    from_port   = 5000
+    to_port     = 5000
     protocol    = "tcp"
     security_groups = ["${aws_security_group.alb_security_group.id}"]
   }
@@ -194,15 +194,13 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
-              sudo yum install httpd node docker git -y
+              sudo yum install node docker git -y
               sudo git clone https://github.com/CitrineInformatics/sample-service.git
-              sudo systemctl start httpd
-              sudo systemctl enable httpd
               sudo systemctl start docker
               sudo systemctl enable docker
-              cd /home/ubuntu/sample-service
+              cd /sample-service
               sudo docker build . -t newimage
-              sudo docker run -p 80:5000 -d newimage
+              sudo docker run -p 8080:5000 -d newimage
               EOF
 
   tags = {
@@ -289,14 +287,6 @@ resource "aws_lb" "application_load_balancer" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  #  ingress {
-  #   description = "443 from VPC"
-  #   from_port   = 443
-  #   to_port     = 443
-  #   protocol    = "tcp"
-  #   cidr_blocks = ["0.0.0.0/0"]
-  # }
    
   egress {
     from_port   = 8080
