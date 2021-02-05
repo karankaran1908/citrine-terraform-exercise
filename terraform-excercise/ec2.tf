@@ -315,7 +315,7 @@ resource "aws_lb" "application_load_balancer" {
 resource "aws_lb_listener" "alb-listner" {
   load_balancer_arn = "${aws_lb.application_load_balancer.arn}"
   port              = 8080
-  protocol          = "HTTPS"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
