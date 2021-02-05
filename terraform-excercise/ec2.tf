@@ -181,7 +181,7 @@ resource "aws_security_group" "application_security_group" {
 resource "aws_instance" "web" {
   ami                    = "ami-0affd4508a5d2481b"
   instance_type          = "t2.micro"
-  key_name               = "karan.pem"
+  key_name               = "karan"
   vpc_security_group_ids = ["${aws_security_group.application_security_group.id}"]
   subnet_id              = "${aws_subnet.public_subnet1.id}"
   iam_instance_profile   = "${aws_iam_instance_profile.CodeDeployEC2ServiceRole-instance-profile.name}"
