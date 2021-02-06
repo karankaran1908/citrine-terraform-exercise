@@ -314,6 +314,6 @@ resource "aws_lb_listener" "alb-listner" {
 
 # Create a new load balancer attachment
 resource "aws_elb_attachment" "baz" {
-  elb      = aws_elb.application_load_balancer.id
+  elb      = aws_lb.application_load_balancer.id
   instance = aws_instance.web.id
 }
