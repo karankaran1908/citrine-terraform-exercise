@@ -156,14 +156,6 @@ resource "aws_security_group" "application_security_group" {
   vpc_id      = "${aws_vpc.vpc.id}"
 
   ingress {
-    description = ""
-    from_port   = 5000
-    to_port     = 5000
-    protocol    = "tcp"
-    security_groups = ["${aws_security_group.alb_security_group.id}"]
-  }
-
-  ingress {
     description = "8080 from load balancer"
     from_port   = 8080
     to_port     = 8080
