@@ -311,3 +311,9 @@ resource "aws_lb_listener" "alb-listner" {
     target_group_arn = "${aws_lb_target_group.alb-target-group.arn}"
   }
 }
+
+# Create a new load balancer attachment
+resource "aws_elb_attachment" "baz" {
+  elb      = aws_elb.application_load_balancer.id
+  instance = aws_instance.web.id
+}
