@@ -312,8 +312,13 @@ resource "aws_lb_listener" "alb-listner" {
   }
 }
 
-# Create a new load balancer attachment
-resource "aws_elb_attachment" "baz" {
-  elb      = aws_lb.load_balancer.id
-  instance = aws_instance.web.id
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = aws_lb_target_group.alb-target-group.arn
+  target_id        = aws_instance.web.id
+  port             = 80
+}
+
+output "this_lb_dns_name" {
+  description = "The DNS name of the load balancer."
+  value       = aws_lb.load_balancer.dns_name
 }
