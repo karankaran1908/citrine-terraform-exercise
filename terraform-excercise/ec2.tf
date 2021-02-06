@@ -251,19 +251,19 @@ resource "aws_lb_target_group" "alb-target-group" {
   vpc_id      = "${aws_vpc.vpc.id}"
   deregistration_delay = 20
   
-  #   health_check {
-  #   interval            = 30
-  #   path                = "/"
-  #   protocol            = "HTTP"
-  #   timeout             = 10
-  #   healthy_threshold   = 2
-  #   unhealthy_threshold = 6
-  #   matcher = "200"
-  # }
-  # stickiness{
-  #   type = "lb_cookie"
-  #   enabled = "true"
-  # }
+     health_check {
+     interval            = 30
+    path                = "/"
+     protocol            = "HTTP"
+     timeout             = 10
+     healthy_threshold   = 2
+     unhealthy_threshold = 6
+     matcher = "200"
+   }
+   stickiness{
+     type = "lb_cookie"
+     enabled = "true"
+   }
 }
 
 # Application load balancer
@@ -311,7 +311,7 @@ resource "aws_lb" "application_load_balancer" {
 # alb listener
 resource "aws_lb_listener" "alb-listner" {
   load_balancer_arn = "${aws_lb.application_load_balancer.arn}"
-  port              = 8080
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
