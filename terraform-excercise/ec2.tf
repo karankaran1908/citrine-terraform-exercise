@@ -142,6 +142,13 @@ resource "aws_route_table_association" "public_subnet_assoc" {
 }
 
 
+# Associate Public Subnet with Public Route Table
+resource "aws_route_table_association" "public_subnet_assoc2" {
+  route_table_id = "${aws_route_table.public_route.id}"
+  subnet_id      = "${aws_subnet.public_subnet2.id}"
+}
+
+
 # Application Security Group
 resource "aws_security_group" "application_security_group" {
   name        = "application_security_group"
