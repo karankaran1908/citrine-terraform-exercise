@@ -313,12 +313,12 @@ resource "aws_lb_listener" "alb-listner" {
 }
 
 resource "aws_lb_target_group_attachment" "test" {
-  target_group_arn = aws_lb_target_group.alb-target-group.arn
-  target_id        = aws_instance.web.id
+  target_group_arn = "${aws_lb_target_group.alb-target-group.arn}"
+  target_id        = "${aws_instance.web.id}"
   port             = 8080
 }
 
-output "this_lb_dns_name" {
+output "Output DNS" {
   description = "The DNS name of the load balancer."
   value       = aws_lb.load_balancer.dns_name
 }
