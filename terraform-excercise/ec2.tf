@@ -259,7 +259,7 @@ resource "aws_lb_target_group" "alb-target-group" {
 }
 
 # Application load balancer
-resource "aws_lb" "application_load_balancer" {
+resource "aws_lb" "load_balancer" {
   name     = "application-load-balancer"
   internal = false
   load_balancer_type = "application"
@@ -302,7 +302,7 @@ resource "aws_lb" "application_load_balancer" {
 
 # alb listener
 resource "aws_lb_listener" "alb-listner" {
-  load_balancer_arn = "${aws_lb.application_load_balancer.arn}"
+  load_balancer_arn = "${aws_lb.load_balancer.arn}"
   port              = 80
   protocol          = "HTTP"
 
@@ -314,6 +314,6 @@ resource "aws_lb_listener" "alb-listner" {
 
 # Create a new load balancer attachment
 resource "aws_elb_attachment" "baz" {
-  elb      = aws_lb.application_load_balancer.id
+  elb      = aws_lb.load_balancer.id
   instance = aws_instance.web.id
 }
