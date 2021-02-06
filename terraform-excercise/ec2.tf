@@ -318,7 +318,7 @@ resource "aws_lb_target_group_attachment" "test" {
   port             = 8080
 }
 
-output "Output DNS" {
+output "OutputDNS" {
   description = "The DNS name of the load balancer."
   value       = aws_lb.load_balancer.dns_name
 }
