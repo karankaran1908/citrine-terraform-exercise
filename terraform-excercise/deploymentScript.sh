@@ -6,7 +6,7 @@ echo "Terraform Initialisation"
 
 terraform init
 
-echo "Terraform Apply"
+echo "Terraform Apply -auto-approve"
 
 terraform apply
 
