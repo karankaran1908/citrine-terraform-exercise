@@ -260,7 +260,7 @@ resource "aws_lb_target_group" "alb-target-group" {
 
 # Application load balancer
 resource "aws_lb" "load_balancer" {
-  name     = "application-load-balancer"
+  name     = "lb"
   internal = false
   load_balancer_type = "application"
   ip_address_type    = "ipv4"
