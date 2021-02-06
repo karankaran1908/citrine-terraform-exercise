@@ -243,19 +243,19 @@ resource "aws_lb_target_group" "alb-target-group" {
   vpc_id      = "${aws_vpc.vpc.id}"
   deregistration_delay = 20
   
-     health_check {
-     interval            = 30
-    path                = "/"
-     protocol            = "HTTP"
-     timeout             = 10
-     healthy_threshold   = 2
-     unhealthy_threshold = 6
-     matcher = "200"
-   }
-   stickiness{
-     type = "lb_cookie"
-     enabled = "true"
-   }
+  #   health_check {
+  #   interval            = 30
+  #  path                = "/"
+  #   protocol            = "HTTP"
+  #   timeout             = 10
+  #   healthy_threshold   = 2
+  #   unhealthy_threshold = 6
+  #   matcher = "200"
+  # }
+  # stickiness{
+  #   type = "lb_cookie"
+  #   enabled = "true"
+  # }
 }
 
 # Application load balancer
