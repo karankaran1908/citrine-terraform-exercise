@@ -29,23 +29,12 @@ resource "aws_subnet" "public_subnet2" {
     Name = "public-subnet"
   }
 }
-# Internet Gateway
-resource "aws_internet_gateway" "gw" {
-  vpc_id = "${aws_vpc.vpc.id}"
 
-  tags = {
-    Name = "gateway"
-  }
-}
 
 # Public Route Table
 resource "aws_route_table" "public_route" {
   vpc_id = "${aws_vpc.vpc.id}"
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.gw.id}"
-  }
 
   tags = {
     Name = "public-route-table"
@@ -107,17 +96,6 @@ resource "aws_instance" "web" {
     volume_type = "gp2"
     volume_size = "20"
   }
-
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum install node docker git -y
-              sudo git clone https://github.com/CitrineInformatics/sample-service.git
-              sudo systemctl start docker
-              sudo systemctl enable docker
-              cd /sample-service
-              sudo docker build . -t newimage
-              sudo docker run -p 8080:5000 -d newimage
-              EOF
 
   tags = {
     Name = "Webapp_EC2"
